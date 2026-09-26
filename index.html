@@ -124,7 +124,7 @@
     .hero-meta div { font: 400 12px var(--mono); color: var(--muted); letter-spacing: .02em; }
     .hero-meta b { display: block; font: 600 16px var(--display); color: var(--text); letter-spacing: 0; margin-bottom: 2px; }
 
-    .portrait { position: relative; max-width: 420px; margin-left: auto; width: 100%; }
+    .portrait { position: relative; max-width: 420px; margin-left: auto; width: 100%; top: -70px; }
     .ring { position: relative; border-radius: 50%; aspect-ratio: 1; padding: 6px; isolation: isolate; }
     .ring::before {
       content: ""; position: absolute; inset: 0; border-radius: 50%; z-index: -1;
@@ -444,7 +444,7 @@
     @media (max-width: 900px) {
       .hero { padding-top: 120px; }
       .hero-grid { grid-template-columns: 1fr; gap: 64px; }
-      .portrait { max-width: 330px; margin-inline: auto; }
+      .portrait { max-width: 330px; margin-inline: auto; top: 0; }
       .bento .about-text { grid-column: span 6; }
       .bento .stat { grid-column: span 3; }
       .bento .edu { grid-template-columns: 1fr; }
