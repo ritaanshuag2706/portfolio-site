@@ -419,23 +419,6 @@
     .project.in .candles .sma { stroke-dashoffset: 0; }
     .project:hover .pbg.candles { opacity: .4; }
 
-    /* dance: moonwalk on hover (or tap on touch) -- faces forward, glides back */
-    .mj .ghost { opacity: 0; }
-    .mj:hover .mjfig, .mj.moon .mjfig { animation: moonwalk 3.2s cubic-bezier(.45,.05,.55,.95) infinite; }
-    .mj:hover .ghost.g1, .mj.moon .ghost.g1 { animation-delay: .1s; opacity: .3; }
-    .mj:hover .ghost.g2, .mj.moon .ghost.g2 { animation-delay: .2s; opacity: .14; }
-    @keyframes moonwalk {
-      0%   { transform: translateX(-190px); }
-      12%  { transform: translateX(-160px) translateY(-4px); }
-      24%  { transform: translateX(-130px); }
-      36%  { transform: translateX(-100px) translateY(-4px); }
-      48%  { transform: translateX(-70px); }
-      60%  { transform: translateX(-40px) translateY(-4px); }
-      72%  { transform: translateX(-10px); }
-      86%  { transform: translateX(0); }
-      100% { transform: translateX(-190px); }
-    }
-    .mj:hover .tiles i, .mj.moon .tiles i { animation-duration: 1.1s; }
 
     /* Football: split-flap scoreboard */
     .barca .board { position: relative; z-index: 2; align-self: flex-start; }
@@ -491,7 +474,7 @@
     .strat .snd, .barca .snd { top: auto; bottom: 16px; }
     .mj .snd { top: auto; bottom: 16px; left: 16px; right: auto; }
     .mj.playing .tiles i { animation-duration: 1.2s; }
-    .mj.playing:not(:hover):not(.moon) .mjfig { animation: groove .45s ease-in-out infinite alternate; }
+    .mj.playing .mjfig { animation: groove .45s ease-in-out infinite alternate; }
     @keyframes groove { to { transform: translateY(-4px) rotate(-2deg); } }
     .barca.playing .ball { animation-duration: 2s; }
     [data-sound]:not(.no-audio) { cursor: pointer; }
@@ -585,7 +568,7 @@
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .reveal { opacity: 1; translate: none; transition: none; }
-      .dot, .orb, .ring::before, .float, .track, .tiles i, .mj .spark, .barca .ball, .strat.playing .strings i, .casio.playing .w.hit, .mj.playing .mjfig, .lang .word .caret, .mj .mjfig, .mj:hover .mjfig, .mj.moon .mjfig, .nn .e, .nn .n, .playing .snd .eq b, .barca:hover .beam, .barca.lights .beam, .flaps .f.flip { animation: none; }
+      .dot, .orb, .ring::before, .float, .track, .tiles i, .mj .spark, .barca .ball, .strat.playing .strings i, .casio.playing .w.hit, .mj.playing .mjfig, .lang .word .caret, .nn .e, .nn .n, .playing .snd .eq b, .barca:hover .beam, .barca.lights .beam, .flaps .f.flip { animation: none; }
       .card, .btn { transition: none; }
     }
   </style>
@@ -735,8 +718,6 @@
         <div class="life">
           <div class="afk mj reveal" data-sound="snd-dance" tabindex="0" role="button" aria-label="Dance, play sound">
             <div class="art" aria-hidden="true">
-              <img class="mjfig ghost g2" src="images/mj.png" alt="">
-              <img class="mjfig ghost g1" src="images/mj.png" alt="">
               <img class="mjfig" src="images/mj.png" alt="">
               <span class="spark">✦</span><span class="spark">✦</span><span class="spark">✦</span>
               <div class="tiles"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -893,9 +874,6 @@
       })();
     })();
 
-    // Dance card: moonwalk on hover; on touch screens, tap toggles it
-    const mjCard = document.querySelector('.afk.mj');
-    if (mjCard && !matchMedia('(hover: hover)').matches) mjCard.addEventListener('click', () => mjCard.classList.toggle('moon'));
 
     // Football card: split-flap scoreboard cycles famous wins; floodlights sweep on hover
     (() => {
