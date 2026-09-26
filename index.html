@@ -402,8 +402,13 @@
     .playing .snd .eq b:nth-child(2) { animation-delay: -.2s; } .playing .snd .eq b:nth-child(3) { animation-delay: -.35s; }
     @keyframes eq { to { height: 10px; } }
     .no-audio .snd { display: none; }
-    .strat .snd { top: auto; bottom: 16px; }
-    [data-sound] { cursor: pointer; }
+    .strat .snd, .barca .snd { top: auto; bottom: 16px; }
+    .mj .snd { top: auto; bottom: 16px; left: 16px; right: auto; }
+    .mj.playing .tiles i { animation-duration: 1.2s; }
+    .mj.playing .mjfig { animation: groove .45s ease-in-out infinite alternate; }
+    @keyframes groove { to { transform: translateY(-4px) rotate(-2deg); } }
+    .barca.playing .ball { animation-duration: 2s; }
+    [data-sound]:not(.no-audio) { cursor: pointer; }
     [data-sound]:focus-visible { outline: 2px solid var(--blue-soft); outline-offset: 3px; }
 
     /* Languages: ai-iro indigo, hinomaru sun, one colour per script */
@@ -412,12 +417,23 @@
     .lang .sun { position: absolute; right: 30px; top: 26px; width: 70px; height: 70px; border-radius: 50%; background: #bc002d; box-shadow: 0 0 40px rgba(188,0,45,.6); }
     .lang .seigaiha { position: absolute; left: 0; right: 0; bottom: 0; height: 90px; opacity: .12;
       background: radial-gradient(circle at 50% 100%, transparent 18px, #fff 19px, #fff 20px, transparent 21px, transparent 26px, #fff 27px, #fff 28px, transparent 29px) 0 0/48px 24px; }
-    .greet { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; position: relative; z-index: 2; }
-    .greet span { font: 600 15px var(--sans); padding: 7px 13px; border-radius: 10px; border: 1px solid; backdrop-filter: blur(4px); }
-    .greet .hi { color: #ffb366; border-color: rgba(255,153,51,.45); background: rgba(255,153,51,.12); }
-    .greet .en { color: #f2f4ff; border-color: rgba(242,244,255,.35); background: rgba(242,244,255,.08); }
-    .greet .fr { color: #8fb6ff; border-color: rgba(0,85,164,.8); background: rgba(0,85,164,.25); }
-    .greet .ja { color: #ffc2d1; border-color: rgba(255,183,197,.45); background: rgba(255,183,197,.12); }
+    .lang { --lc: #ffb366; }
+    .lang .word {
+      position: relative; z-index: 2; margin: 14px 0 18px; min-height: 44px;
+      font: 700 34px/1.2 var(--display); color: var(--lc); transition: color .4s;
+      text-shadow: 0 0 24px color-mix(in srgb, var(--lc) 45%, transparent);
+    }
+    .lang .word .caret { display: inline-block; width: 2px; height: .9em; margin-left: 3px; vertical-align: -2px; background: currentColor; animation: caret 1s steps(1) infinite; }
+    @keyframes caret { 50% { opacity: 0; } }
+    .bars { position: relative; z-index: 2; margin-top: auto; display: grid; gap: 10px; }
+    .bar { --c: #fff; display: grid; grid-template-columns: 1fr auto; gap: 5px 10px; align-items: center; opacity: .6; transition: opacity .4s; }
+    .bar.on { opacity: 1; }
+    .bar .nm { font: 600 13px var(--sans); color: #fff; }
+    .bar .lv { font: 500 11px var(--mono); color: var(--c); }
+    .bar .meter { grid-column: 1 / -1; height: 6px; border-radius: 99px; background: rgba(255,255,255,.1); overflow: hidden; }
+    .bar .fill { height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, color-mix(in srgb, var(--c) 60%, transparent), var(--c)); box-shadow: 0 0 10px var(--c); transition: width 1.4s cubic-bezier(.2,.7,.2,1); }
+    .lang.in .bar .fill { width: var(--p); }
+    .bar.hi { --c: #ffb366; } .bar.en { --c: #f2f4ff; } .bar.fr { --c: #8fb6ff; } .bar.ja { --c: #ffc2d1; }
 
     /* contact */
     .contact {
@@ -479,7 +495,7 @@
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .reveal { opacity: 1; translate: none; transition: none; }
-      .dot, .orb, .ring::before, .float, .track, .tiles i, .mj .spark, .barca .ball, .strat.playing .strings i, .casio.playing .w.hit, .playing .snd .eq b { animation: none; }
+      .dot, .orb, .ring::before, .float, .track, .tiles i, .mj .spark, .barca .ball, .strat.playing .strings i, .casio.playing .w.hit, .mj.playing .mjfig, .lang .word .caret, .playing .snd .eq b { animation: none; }
       .card, .btn { transition: none; }
     }
   </style>
@@ -625,21 +641,23 @@
       <div class="wrap">
         <div class="head reveal"><div><div class="label"><span class="n">05</span>Beyond code</div><h2>The other half</h2></div></div>
         <div class="life">
-          <div class="afk mj reveal">
+          <div class="afk mj reveal" data-sound="snd-dance" tabindex="0" role="button" aria-label="Dance, play sound">
             <div class="art" aria-hidden="true">
               <img class="mjfig" src="images/mj.png" alt="">
               <span class="spark">✦</span><span class="spark">✦</span><span class="spark">✦</span>
               <div class="tiles"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
             </div>
+            <span class="snd" aria-hidden="true"><span class="eq"><b></b><b></b><b></b></span><span class="snd-label">Hover to play</span></span>
             <div class="kicker">Moonwalk certified</div>
             <h3>Dance</h3>
             <div class="stripe"></div>
           </div>
-          <div class="afk barca reveal">
+          <div class="afk barca reveal" data-sound="snd-barca" tabindex="0" role="button" aria-label="Football, play sound">
             <div class="art" aria-hidden="true">
               <svg class="ball" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m12 7 4.2 3-1.6 5h-5.2l-1.6-5Z" fill="currentColor" fill-opacity=".25"/><path d="M12 7V2.5M16.2 10l4.3-1.4M14.6 15l2.7 3.8M9.4 15l-2.7 3.8M7.8 10 3.5 8.6"/></svg>
               <span class="num">30</span>
             </div>
+            <span class="snd" aria-hidden="true"><span class="eq"><b></b><b></b><b></b></span><span class="snd-label">Hover to play</span></span>
             <div class="kicker">Visca el Barça</div>
             <h3>Football</h3>
           </div>
@@ -664,11 +682,12 @@
             <div class="art" aria-hidden="true"><div class="sun"></div><div class="seigaiha"></div></div>
             <div class="kicker">4 languages</div>
             <h3>Languages</h3>
-            <div class="greet">
-              <span class="hi" lang="hi">नमस्ते</span>
-              <span class="en" lang="en">Hello</span>
-              <span class="fr" lang="fr">Bonjour</span>
-              <span class="ja" lang="ja">こんにちは</span>
+            <div class="word" aria-live="off"><span class="txt" lang="hi">नमस्ते</span><span class="caret" aria-hidden="true"></span></div>
+            <div class="bars">
+              <div class="bar hi" style="--p:100%"><span class="nm">Hindi</span><span class="lv">Native</span><div class="meter"><div class="fill"></div></div></div>
+              <div class="bar en" style="--p:95%"><span class="nm">English</span><span class="lv">Fluent</span><div class="meter"><div class="fill"></div></div></div>
+              <div class="bar fr" style="--p:60%"><span class="nm">French</span><span class="lv">Intermediate</span><div class="meter"><div class="fill"></div></div></div>
+              <div class="bar ja" style="--p:25%"><span class="nm">Japanese</span><span class="lv">Learning</span><div class="meter"><div class="fill"></div></div></div>
             </div>
           </div>
         </div>
@@ -735,10 +754,45 @@
     }), { rootMargin: '-45% 0px -50% 0px' });
     ['about', 'experience', 'projects', 'contact'].forEach(id => spy.observe(document.getElementById(id)));
 
+    // Languages card: type out a greeting in each language, colour-matched to its bar
+    (() => {
+      const card = document.querySelector('.afk.lang');
+      if (!card) return;
+      const txt = card.querySelector('.word .txt');
+      const bars = [...card.querySelectorAll('.bar')];
+      const words = [
+        { t: 'नमस्ते', lang: 'hi', c: '#ffb366' },
+        { t: 'Hello', lang: 'en', c: '#f2f4ff' },
+        { t: 'Bonjour', lang: 'fr', c: '#8fb6ff' },
+        { t: 'こんにちは', lang: 'ja', c: '#ffc2d1' },
+      ];
+      const seg = typeof Intl !== 'undefined' && Intl.Segmenter ? new Intl.Segmenter() : null;
+      const chars = s => seg ? [...seg.segment(s)].map(x => x.segment) : Array.from(s);
+      const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const wait = ms => new Promise(r => setTimeout(r, ms));
+      const show = w => {
+        card.style.setProperty('--lc', w.c);
+        txt.lang = w.lang;
+        bars.forEach(b => b.classList.toggle('on', b.classList.contains(w.lang)));
+      };
+      (async () => {
+        for (let i = 0; ; i = (i + 1) % words.length) {
+          const w = words[i], cs = chars(w.t);
+          show(w);
+          if (still) { txt.textContent = w.t; await wait(2600); continue; }
+          for (let k = 1; k <= cs.length; k++) { txt.textContent = cs.slice(0, k).join(''); await wait(110); }
+          await wait(1800);
+          for (let k = cs.length - 1; k >= 0; k--) { txt.textContent = cs.slice(0, k).join(''); await wait(55); }
+          await wait(250);
+        }
+      })();
+    })();
+
     // hover (or tap) the guitar / piano card to play your own recording
     const canHover = matchMedia('(hover: hover)').matches;
     document.querySelectorAll('[data-sound]').forEach(card => {
       const audio = document.getElementById(card.dataset.sound);
+      if (!audio) { card.classList.add('no-audio'); card.removeAttribute('role'); card.removeAttribute('tabindex'); return; }
       const label = card.querySelector('.snd-label');
       if (!canHover) label.textContent = 'Tap to play';
       let fade;
