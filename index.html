@@ -313,8 +313,7 @@
     .mj .mjfig img { position: absolute; inset: 0; width: 100%; height: 100%; filter: invert(1) grayscale(1) contrast(8); mix-blend-mode: screen; }
     /* a fedora follows the mouse around the stage */
     .cursorhat { position: absolute; left: 0; top: 0; width: 92px; z-index: 3; pointer-events: none; opacity: 0; transition: opacity .25s; will-change: transform; }
-    .cursorhat img { display: block; width: 100%; height: auto; filter: invert(1) grayscale(1) contrast(8); mix-blend-mode: screen;
-      clip-path: polygon(0 0, 100% 0, 100% 98.6%, 75.5% 98.6%, 2% 91.5%, 0 91.5%); }
+    .cursorhat img { display: block; width: 100%; height: auto; filter: drop-shadow(0 6px 10px rgba(0,0,0,.5)); }
     .mj.hatting { cursor: none; }
     .mj.hatting .cursorhat { opacity: 1; }
     .mj .spark { position: absolute; color: #fff; font-size: 12px; animation: twinkle 2.4s ease-in-out infinite; z-index: 1; }
