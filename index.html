@@ -288,8 +288,9 @@
 
     /* beyond code */
     .life { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
-    .life .afk { grid-column: span 2; }
-    .life .afk.mj, .life .afk.barca { grid-column: span 3; }
+    .life .slot { grid-column: span 2; position: relative; display: flex; }
+    .life .slot > .afk { flex: 1; min-width: 0; }
+    .life .slot.s-mj, .life .slot.s-barca { grid-column: span 3; }
     .afk {
       position: relative; overflow: hidden; isolation: isolate;
       border-radius: var(--radius); min-height: 260px; padding: 26px 28px;
@@ -472,36 +473,32 @@
     .barca:hover .tower, .barca.lights .tower { opacity: 1; }
     .barca:hover .tower i, .barca.lights .tower i { box-shadow: 0 0 10px 2px rgba(255,251,232,.9); }
 
-    /* Away-from-keyboard doodles: fan-art nods beside the section heading */
-    #life .wrap { position: relative; }
-    .doodles { position: absolute; right: 0; top: -14px; display: flex; align-items: flex-start; gap: 22px; z-index: 1; }
-    .dd { display: block; width: 52px; filter: drop-shadow(0 8px 14px rgba(0,0,0,.45)); animation: bob 5s ease-in-out infinite; cursor: default; }
-    .dd svg { display: block; width: 100%; height: auto; overflow: visible; transition: transform .4s cubic-bezier(.34,1.56,.64,1); }
-    .dd.pika { width: 62px; margin-top: 6px; animation-delay: -1s; }
-    .dd.pokeball { width: 44px; margin-top: 46px; animation-delay: -2.2s; }
-    .dd.db { width: 44px; margin-top: 2px; animation-delay: -3.1s; }
-    .dd.goku { width: 42px; margin-top: 50px; animation-delay: -.6s; }
-    .dd.bey { width: 58px; margin-top: 0; animation-delay: -4s; }
-    .dd.inazuma { width: 54px; margin-top: 40px; animation-delay: -1.7s; }
-    .dd.pika svg { transform: rotate(-8deg); } .dd.goku svg { transform: rotate(8deg); } .dd.inazuma svg { transform: rotate(-6deg); }
+    /* Character doodles perched on the card edges (fan art) */
+    .dd { position: absolute; z-index: 4; width: 70px; pointer-events: auto; animation: bob 5s ease-in-out infinite; filter: drop-shadow(0 8px 14px rgba(0,0,0,.5)); }
+    .dd .ch svg { display: block; width: 100%; height: auto; overflow: visible; transition: transform .4s cubic-bezier(.34,1.56,.64,1); }
+    .dd .it { position: absolute; width: 30px; bottom: -4px; }
+    .dd .it svg { display: block; width: 100%; height: auto; overflow: visible; }
+    .dd.left { left: -38px; } .dd.right { right: -38px; }
+    .dd.left .it { right: -14px; } .dd.right .it { left: -14px; }
+    .dd.pika { top: 34%; } .dd.tyson { bottom: 10px; animation-delay: -2s; }
+    .dd.goku { top: 30%; animation-delay: -1s; }
+    .dd.kuroko { top: 36%; animation-delay: -3s; }
+    .dd.endou { top: 22%; animation-delay: -1.6s; }
+    .dd.pika .ch svg { transform: rotate(-8deg); } .dd.goku .ch svg { transform: rotate(6deg); } .dd.endou .ch svg { transform: rotate(5deg); } .dd.kuroko .ch svg { transform: rotate(-4deg); }
     @keyframes bob { 50% { translate: 0 -7px; } }
-    .dd.bey .spin { transform-origin: 30px 30px; animation: bey 2.4s linear infinite; }
+    .dd:hover .ch svg { transform: translateY(-10px) scale(1.1) rotate(0deg); }
+    .dd .it.bey .spin { transform-origin: 30px 30px; animation: bey 1.6s linear infinite; }
     @keyframes bey { to { transform: rotate(360deg); } }
-    .dd.bey:hover .spin { animation-duration: .35s; }
-    .dd.pika:hover svg { transform: rotate(-8deg) translateY(-10px) scale(1.08); }
-    .dd.pokeball:hover svg { animation: wobble .9s ease-in-out; }
+    .dd:hover .it.bey .spin { animation-duration: .3s; }
+    .dd:hover .it.pokeball svg { animation: wobble .9s ease-in-out; }
     @keyframes wobble { 20% { transform: rotate(-18deg); } 40% { transform: rotate(14deg); } 60% { transform: rotate(-9deg); } 80% { transform: rotate(5deg); } }
-    .dd.db:hover svg { transform: scale(1.15); filter: drop-shadow(0 0 12px rgba(255,170,40,.9)); }
-    .dd.goku:hover svg { transform: rotate(-4deg) scale(1.12); }
-    .dd.inazuma:hover .bolt { animation: zap .5s steps(2) 2; }
-    @keyframes zap { 50% { fill: #fff; filter: drop-shadow(0 0 8px #ffd400); } }
-    @media (max-width: 1000px) { .dd.pika, .dd.pokeball { display: none; } }
-    @media (max-width: 700px) {
-      .dd.db, .dd.goku { display: none; }
-      .doodles { top: 18px; gap: 12px; }
-      .dd.bey { width: 34px; } .dd.inazuma { width: 32px; margin-top: 14px; }
-      .doodles { top: 30px; gap: 8px; }
-    }
+    .dd:hover .it.db svg { filter: drop-shadow(0 0 10px rgba(255,170,40,.95)); }
+    .dd:hover .it.bball svg { animation: dribble .5s ease-in 2 alternate; }
+    @keyframes dribble { to { transform: translateY(12px); } }
+    .dd:hover .it.inazuma .bolt { animation: zap .5s steps(2) 2; }
+    @keyframes zap { 50% { fill: #fff; } }
+    @media (max-width: 1240px) { .dd { width: 58px; } .dd.left { left: -14px; } .dd.right { right: -14px; } .dd .it { width: 24px; } }
+    @media (max-width: 700px) { .dd { width: 48px; } .dd.left { left: -8px; } .dd.right { right: -8px; } .dd .it { width: 20px; } }
 
     /* hover-to-play chip */
     .snd {
@@ -582,7 +579,7 @@
       .xp { grid-template-columns: 1fr; gap: 14px; }
       .projects, .skills { grid-template-columns: 1fr; }
       .life { grid-template-columns: 1fr; }
-      .life .afk, .life .afk.mj, .life .afk.barca { grid-column: auto; }
+      .life .slot, .life .slot.s-mj, .life .slot.s-barca { grid-column: auto; }
       .barca .tower.l { left: 40%; } .barca .tower.r { right: 104px; }
       .flaps .f { width: 21px; height: 30px; font-size: 17px; } .flaps .f.sc { width: 24px; }
       .afk { min-height: 230px; }
@@ -612,7 +609,7 @@
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .reveal { opacity: 1; translate: none; transition: none; }
-      .dot, .orb, .ring::before, .float, .track, .tiles i, .mj .spark, .barca .ball, .strat.playing .strings i, .casio.playing .w.hit, .mj.playing .mjfig, .lang .word .caret, .nn .e, .nn .n, .playing .snd .eq b, .tiles i.lit, .dd, .dd.bey .spin, .barca:hover .beam, .barca.lights .beam, .flaps .f.flip { animation: none; }
+      .dot, .orb, .ring::before, .float, .track, .tiles i, .mj .spark, .barca .ball, .strat.playing .strings i, .casio.playing .w.hit, .mj.playing .mjfig, .lang .word .caret, .nn .e, .nn .n, .playing .snd .eq b, .tiles i.lit, .dd, .dd .it.bey .spin, .barca:hover .beam, .barca.lights .beam, .flaps .f.flip { animation: none; }
       .card, .btn { transition: none; }
     }
   </style>
@@ -759,9 +756,9 @@
     <section id="life">
       <div class="wrap">
         <div class="head reveal"><div><div class="label"><span class="n">05</span>Beyond code</div><h2>The other half</h2></div></div>
-        <div class="doodles" aria-hidden="true"><span class="dd pika" title="Pikachu"><svg viewBox="0 0 64 64"><path d="M20 31 Q10 17 7 3 Q20 11 29 27 Z" fill="#ffd93b" stroke="#6b4e00" stroke-width="1.4" stroke-linejoin="round"/><path d="M7 3 Q11.5 6.5 15 9.5 L12 14 Q9 9 7 3Z" fill="#1d1d1d"/><path d="M44 31 Q54 17 57 3 Q44 11 35 27 Z" fill="#ffd93b" stroke="#6b4e00" stroke-width="1.4" stroke-linejoin="round"/><path d="M57 3 Q52.5 6.5 49 9.5 L52 14 Q55 9 57 3Z" fill="#1d1d1d"/><ellipse cx="32" cy="41" rx="20" ry="16" fill="#ffd93b" stroke="#6b4e00" stroke-width="1.4"/><circle cx="24" cy="38" r="3.2" fill="#1d1d1d"/><circle cx="25" cy="37" r="1.1" fill="#fff"/><circle cx="40" cy="38" r="3.2" fill="#1d1d1d"/><circle cx="41" cy="37" r="1.1" fill="#fff"/><circle cx="17" cy="46" r="4.2" fill="#ff4d4d"/><circle cx="47" cy="46" r="4.2" fill="#ff4d4d"/><circle cx="32" cy="42" r=".9" fill="#1d1d1d"/><path d="M28 45.5 Q30 48.5 32 45.5 Q34 48.5 36 45.5" fill="none" stroke="#1d1d1d" stroke-width="1.3" stroke-linecap="round"/></svg></span><span class="dd pokeball" title="Poké Ball"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="#f4f4f6"/><path d="M4 24a20 20 0 0 1 40 0Z" fill="#ff3b4f"/><path d="M4.5 24h13M30.5 24h13" stroke="#0b1226" stroke-width="3.5"/><circle cx="24" cy="24" r="6.5" fill="#f4f4f6" stroke="#0b1226" stroke-width="3.5"/><circle cx="24" cy="24" r="20" fill="none" stroke="#dfe6ff" stroke-width="2"/><path d="M11 14 Q15 9 21 8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".7"/></svg></span><span class="dd db" title="Four-star Dragon Ball"><svg viewBox="0 0 48 48"><defs><radialGradient id="dbg" cx="38%" cy="32%" r="70%"><stop offset="0" stop-color="#ffd27a"/><stop offset=".55" stop-color="#ff9a1f"/><stop offset="1" stop-color="#e06a00"/></radialGradient></defs><circle cx="24" cy="24" r="19" fill="url(#dbg)" stroke="#ffe2a8" stroke-width="1.2"/><polygon points="24.0,11.2 25.1,13.9 28.1,14.2 25.8,16.1 26.5,19.0 24.0,17.4 21.5,19.0 22.2,16.1 19.9,14.2 22.9,13.9" fill="#e3202c"/><polygon points="15.5,19.7 16.6,22.4 19.6,22.7 17.3,24.6 18.0,27.5 15.5,25.9 13.0,27.5 13.7,24.6 11.4,22.7 14.4,22.4" fill="#e3202c"/><polygon points="32.5,19.7 33.6,22.4 36.6,22.7 34.3,24.6 35.0,27.5 32.5,25.9 30.0,27.5 30.7,24.6 28.4,22.7 31.4,22.4" fill="#e3202c"/><polygon points="24.0,28.2 25.1,30.9 28.1,31.2 25.8,33.1 26.5,36.0 24.0,34.4 21.5,36.0 22.2,33.1 19.9,31.2 22.9,30.9" fill="#e3202c"/><ellipse cx="16" cy="13" rx="5" ry="3" fill="#fff" opacity=".55" transform="rotate(-30 16 13)"/></svg></span><span class="dd goku" title="Goku symbol"><svg viewBox="0 0 48 48"><rect x="3" y="3" width="42" height="42" rx="10" fill="#ff8a1c"/><circle cx="24" cy="24" r="15" fill="#fbfaf5"/><text x="24" y="31.5" text-anchor="middle" font-size="20" font-weight="700" fill="#141414" font-family="'Hiragino Sans','Noto Sans JP','Yu Gothic',sans-serif">悟</text></svg></span><span class="dd bey" title="Beyblade"><svg viewBox="0 0 60 60"><g class="spin"><circle cx="30" cy="30" r="27" fill="none" stroke="#cfe0ff" stroke-width="1.2" stroke-dasharray="6 10" opacity=".6"/><path d="M30 15 C41 10 51 17 52 29 C46 24 39 23 34 26 Z" fill="#3d7bff" stroke="#cfe0ff" stroke-width="1.2" transform="rotate(0 30 30)"/><path d="M30 15 C41 10 51 17 52 29 C46 24 39 23 34 26 Z" fill="#3d7bff" stroke="#cfe0ff" stroke-width="1.2" transform="rotate(120 30 30)"/><path d="M30 15 C41 10 51 17 52 29 C46 24 39 23 34 26 Z" fill="#3d7bff" stroke="#cfe0ff" stroke-width="1.2" transform="rotate(240 30 30)"/><circle cx="30" cy="30" r="13" fill="#1d2a55" stroke="#7aa2ff" stroke-width="2"/><circle cx="30" cy="30" r="6" fill="#ff3b4f" stroke="#ffd0d5" stroke-width="1.2"/><path d="M30 24v12M24 30h12" stroke="#ffd0d5" stroke-width="1.2"/></g></svg></span><span class="dd inazuma" title="Inazuma Eleven lightning ball"><svg viewBox="0 0 56 56"><circle cx="22" cy="33" r="17" fill="#f7f7f9" stroke="#dfe6ff" stroke-width="1.5"/><path d="M22 26.5 28.2 31 25.8 38.3 18.2 38.3 15.8 31Z" fill="#0b1226"/><path d="M22 26.5V17M28.2 31l8.8-3M25.8 38.3l5.6 7.6M18.2 38.3l-5.6 7.6M15.8 31l-8.8-3" stroke="#0b1226" stroke-width="1.6"/><path class="bolt" d="M43 2 32 22h8l-6 17 18-23h-9l6-14Z" fill="#ffd400" stroke="#fff3a0" stroke-width="1.2" stroke-linejoin="round"/></svg></span></div>
         <div class="life">
-          <div class="afk mj reveal" data-sound="snd-dance" tabindex="0" role="button" aria-label="Dance, play sound">
+          <div class="slot s-mj">
+            <div class="afk mj reveal" data-sound="snd-dance" tabindex="0" role="button" aria-label="Dance, play sound">
             <div class="art" aria-hidden="true">
               <div class="mjfig"><img src="images/mj.png" alt=""></div>
               <span class="spark">✦</span><span class="spark">✦</span><span class="spark">✦</span>
@@ -773,7 +770,10 @@
             <h3>Dance</h3>
             <div class="stripe"></div>
           </div>
-          <div class="afk barca reveal" data-sound="snd-barca" tabindex="0" role="button" aria-label="Football, play sound">
+            <span class="dd pika left" aria-hidden="true" title="Pikachu"><span class="ch"><svg viewBox="0 0 64 64"><path d="M20 31 Q10 17 7 3 Q20 11 29 27 Z" fill="#ffd93b" stroke="#6b4e00" stroke-width="1.4" stroke-linejoin="round"/><path d="M7 3 Q11.5 6.5 15 9.5 L12 14 Q9 9 7 3Z" fill="#1d1d1d"/><path d="M44 31 Q54 17 57 3 Q44 11 35 27 Z" fill="#ffd93b" stroke="#6b4e00" stroke-width="1.4" stroke-linejoin="round"/><path d="M57 3 Q52.5 6.5 49 9.5 L52 14 Q55 9 57 3Z" fill="#1d1d1d"/><ellipse cx="32" cy="41" rx="20" ry="16" fill="#ffd93b" stroke="#6b4e00" stroke-width="1.4"/><circle cx="24" cy="38" r="3.2" fill="#1d1d1d"/><circle cx="25" cy="37" r="1.1" fill="#fff"/><circle cx="40" cy="38" r="3.2" fill="#1d1d1d"/><circle cx="41" cy="37" r="1.1" fill="#fff"/><circle cx="17" cy="46" r="4.2" fill="#ff4d4d"/><circle cx="47" cy="46" r="4.2" fill="#ff4d4d"/><circle cx="32" cy="42" r=".9" fill="#1d1d1d"/><path d="M28 45.5 Q30 48.5 32 45.5 Q34 48.5 36 45.5" fill="none" stroke="#1d1d1d" stroke-width="1.3" stroke-linecap="round"/></svg></span><span class="it pokeball"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="#f4f4f6"/><path d="M4 24a20 20 0 0 1 40 0Z" fill="#ff3b4f"/><path d="M4.5 24h13M30.5 24h13" stroke="#0b1226" stroke-width="3.5"/><circle cx="24" cy="24" r="6.5" fill="#f4f4f6" stroke="#0b1226" stroke-width="3.5"/><circle cx="24" cy="24" r="20" fill="none" stroke="#dfe6ff" stroke-width="2"/><path d="M11 14 Q15 9 21 8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".7"/></svg></span></span><span class="dd tyson left low" aria-hidden="true" title="Tyson"><span class="ch"><svg viewBox="0 0 64 72"><path d="M12 40 8 30l6 1-2-6 7 4M52 40l4-10-6 1 2-6-7 4" fill="#1c2a5e"/><rect x="27" y="52" width="10" height="6" fill="#ffe1c4"/><path d="M10 72q2-15 22-17 20 2 22 17Z" fill="#ffd23c" stroke="#b8901a" stroke-width="1.2"/><path d="M10 72q2-15 13-16l3 16ZM54 72q-2-15-13-16l-3 16Z" fill="#d62b2b"/><ellipse cx="32" cy="41" rx="15" ry="16" fill="#ffe1c4" stroke="#2a1d14" stroke-width="1.3"/><path d="M17 33l3 7 3-6 3 6 3-6 3 6 3-6 3 6 3-6 3 7 2-5Z" fill="#1c2a5e"/><path d="M15 33Q15 13 32 13 49 13 49 33Z" fill="#d62b2b" stroke="#8e1414" stroke-width="1.2"/><path d="M32 13Q44 14 47 26L41 27Q38 17 32 16Z" fill="#2446c9"/><path d="M13 32q-9 1-11-4 7-3 14 1Z" fill="#2446c9" stroke="#15288a" stroke-width="1"/><ellipse cx="26" cy="43" rx="2.4" ry="3.2" fill="#3a2a6e"/><ellipse cx="26" cy="43.6" rx="1.32" ry="1.92" fill="#1a1a1a"/><circle cx="26.9" cy="41.8" r="1" fill="#fff"/><ellipse cx="38" cy="43" rx="2.4" ry="3.2" fill="#3a2a6e"/><ellipse cx="38" cy="43.6" rx="1.32" ry="1.92" fill="#1a1a1a"/><circle cx="38.9" cy="41.8" r="1" fill="#fff"/><path d="M26 49q6 6 12 0Z" fill="#fff" stroke="#7a2a1a" stroke-width="1.3" stroke-linejoin="round"/></svg></span><span class="it bey"><svg viewBox="0 0 60 60"><g class="spin"><circle cx="30" cy="30" r="27" fill="none" stroke="#cfe0ff" stroke-width="1.2" stroke-dasharray="6 10" opacity=".6"/><path d="M30 15 C41 10 51 17 52 29 C46 24 39 23 34 26 Z" fill="#3d7bff" stroke="#cfe0ff" stroke-width="1.2" transform="rotate(0 30 30)"/><path d="M30 15 C41 10 51 17 52 29 C46 24 39 23 34 26 Z" fill="#3d7bff" stroke="#cfe0ff" stroke-width="1.2" transform="rotate(120 30 30)"/><path d="M30 15 C41 10 51 17 52 29 C46 24 39 23 34 26 Z" fill="#3d7bff" stroke="#cfe0ff" stroke-width="1.2" transform="rotate(240 30 30)"/><circle cx="30" cy="30" r="13" fill="#1d2a55" stroke="#7aa2ff" stroke-width="2"/><circle cx="30" cy="30" r="6" fill="#ff3b4f" stroke="#ffd0d5" stroke-width="1.2"/><path d="M30 24v12M24 30h12" stroke="#ffd0d5" stroke-width="1.2"/></g></svg></span></span>
+          </div>
+          <div class="slot s-barca">
+            <div class="afk barca reveal" data-sound="snd-barca" tabindex="0" role="button" aria-label="Football, play sound">
             <div class="art" aria-hidden="true">
               <svg class="ball" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m12 7 4.2 3-1.6 5h-5.2l-1.6-5Z" fill="currentColor" fill-opacity=".25"/><path d="M12 7V2.5M16.2 10l4.3-1.4M14.6 15l2.7 3.8M9.4 15l-2.7 3.8M7.8 10 3.5 8.6"/></svg>
               <span class="num">30</span>
@@ -793,7 +793,10 @@
             <div class="kicker">Visca el Barça</div>
             <h3>Football</h3>
           </div>
-          <div class="afk strat reveal" data-sound="snd-guitar" tabindex="0" role="button" aria-label="Guitar, play sound">
+            <span class="dd goku right" aria-hidden="true" title="Goku"><span class="ch"><svg viewBox="0 0 64 72"><path d="M5 38 1 22l11 5-4-17 12 9 2-18 9 13 8-15 4 16 11-10-3 17 11-3-5 18Z" fill="#161616"/><rect x="27" y="52" width="10" height="6" fill="#ffe1c4"/><path d="M10 72q2-15 22-17 20 2 22 17Z" fill="#ff8a1c" stroke="#b85a00" stroke-width="1.2"/><path d="M25 55 32 65 39 55Z" fill="#1f4fbf"/><ellipse cx="32" cy="39" rx="15" ry="16" fill="#ffe1c4" stroke="#2a1d14" stroke-width="1.3"/><path d="M16 30 20 38 23 28 27 36 30 26 34 35 37 26 40 35 43 27 45 36 48 31 46 24Q32 16 18 24Z" fill="#161616"/><path d="M23 36l6 2M41 36l-6 2" stroke="#161616" stroke-width="1.6" stroke-linecap="round"/><ellipse cx="26" cy="41" rx="2.4" ry="3.2" fill="#161616"/><ellipse cx="26" cy="41.6" rx="1.32" ry="1.92" fill="#1a1a1a"/><circle cx="26.9" cy="39.8" r="1" fill="#fff"/><ellipse cx="38" cy="41" rx="2.4" ry="3.2" fill="#161616"/><ellipse cx="38" cy="41.6" rx="1.32" ry="1.92" fill="#1a1a1a"/><circle cx="38.9" cy="39.8" r="1" fill="#fff"/><path d="M28 48q4 3 8 0" fill="none" stroke="#7a2a1a" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="it db"><svg viewBox="0 0 48 48"><defs><radialGradient id="dbg" cx="38%" cy="32%" r="70%"><stop offset="0" stop-color="#ffd27a"/><stop offset=".55" stop-color="#ff9a1f"/><stop offset="1" stop-color="#e06a00"/></radialGradient></defs><circle cx="24" cy="24" r="19" fill="url(#dbg)" stroke="#ffe2a8" stroke-width="1.2"/><polygon points="24.0,11.2 25.1,13.9 28.1,14.2 25.8,16.1 26.5,19.0 24.0,17.4 21.5,19.0 22.2,16.1 19.9,14.2 22.9,13.9" fill="#e3202c"/><polygon points="15.5,19.7 16.6,22.4 19.6,22.7 17.3,24.6 18.0,27.5 15.5,25.9 13.0,27.5 13.7,24.6 11.4,22.7 14.4,22.4" fill="#e3202c"/><polygon points="32.5,19.7 33.6,22.4 36.6,22.7 34.3,24.6 35.0,27.5 32.5,25.9 30.0,27.5 30.7,24.6 28.4,22.7 31.4,22.4" fill="#e3202c"/><polygon points="24.0,28.2 25.1,30.9 28.1,31.2 25.8,33.1 26.5,36.0 24.0,34.4 21.5,36.0 22.2,33.1 19.9,31.2 22.9,30.9" fill="#e3202c"/><ellipse cx="16" cy="13" rx="5" ry="3" fill="#fff" opacity=".55" transform="rotate(-30 16 13)"/></svg></span></span>
+          </div>
+          <div class="slot s-strat">
+            <div class="afk strat reveal" data-sound="snd-guitar" tabindex="0" role="button" aria-label="Guitar, play sound">
             <div class="art" aria-hidden="true">
               <div class="guard"></div>
               <div class="bridge"></div>
@@ -803,14 +806,19 @@
             <div class="kicker">Fender Stratocaster</div>
             <h3>Guitar</h3>
           </div>
-          <div class="afk casio reveal" data-sound="snd-piano" tabindex="0" role="button" aria-label="Piano, play sound">
+            <span class="dd kuroko left" aria-hidden="true" title="Kuroko"><span class="ch"><svg viewBox="0 0 64 72"><rect x="27" y="52" width="10" height="6" fill="#ffe1c4"/><path d="M10 72q2-15 22-17 20 2 22 17Z" fill="#fbfbfd" stroke="#20242c" stroke-width="1.3"/><path d="M24 55 32 62 40 55" fill="none" stroke="#20242c" stroke-width="2.4"/><text x="32" y="70.5" text-anchor="middle" font-size="9" font-weight="800" fill="#c8102e" font-family="Space Grotesk, sans-serif">11</text><ellipse cx="32" cy="40" rx="15" ry="16" fill="#ffe1c4" stroke="#2a1d14" stroke-width="1.3"/><path d="M14 38Q11 14 32 13 53 14 50 38l-4-8-3 7-3-8-4 8-4-9-4 9-4-8-3 8-3-7Z" fill="#8fd3ff" stroke="#3b86b8" stroke-width="1.2" stroke-linejoin="round"/><ellipse cx="26" cy="42" rx="3" ry="3.8" fill="#4aaee8"/><ellipse cx="26" cy="42.6" rx="1.6500000000000001" ry="2.28" fill="#1a1a1a"/><circle cx="26.9" cy="40.8" r="1" fill="#fff"/><ellipse cx="38" cy="42" rx="3" ry="3.8" fill="#4aaee8"/><ellipse cx="38" cy="42.6" rx="1.6500000000000001" ry="2.28" fill="#1a1a1a"/><circle cx="38.9" cy="40.8" r="1" fill="#fff"/><path d="M29.5 49.5h5" stroke="#7a3a2a" stroke-width="1.4" stroke-linecap="round"/></svg></span><span class="it bball"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="19" fill="#f08a24" stroke="#7a3a0a" stroke-width="1.8"/><path d="M5 24h38M24 5v38M11 10q9 14 0 28M37 10q-9 14 0 28" fill="none" stroke="#7a3a0a" stroke-width="1.8"/></svg></span></span>
+          </div>
+          <div class="slot s-casio">
+            <div class="afk casio reveal" data-sound="snd-piano" tabindex="0" role="button" aria-label="Piano, play sound">
             <span class="snd" aria-hidden="true"><span class="eq"><b></b><b></b><b></b></span><span class="snd-label">Hover to play</span></span>
             <div class="kicker">Synthesizer</div>
             <h3>Piano</h3>
             <div class="panel" aria-hidden="true"><span class="knobs"><i></i><i></i><i></i></span><span class="btns"><i></i><i></i><i></i><i></i></span><span class="grill"></span></div>
             <div class="keys" aria-hidden="true"><svg viewBox="0 0 220 60" preserveAspectRatio="xMidYMid meet"><rect class="w hit" x="0" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="10" y="0" width="9.4" height="60" rx="1.2"/><rect class="w hit" x="20" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="30" y="0" width="9.4" height="60" rx="1.2"/><rect class="w hit" x="40" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="50" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="60" y="0" width="9.4" height="60" rx="1.2"/><rect class="w hit" x="70" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="80" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="90" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="100" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="110" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="120" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="130" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="140" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="150" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="160" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="170" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="180" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="190" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="200" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="210" y="0" width="9.4" height="60" rx="1.2"/><rect class="b" x="6.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="16.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="36.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="46.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="56.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="76.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="86.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="106.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="116.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="126.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="146.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="156.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="176.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="186.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="196.6" y="0" width="6" height="36" rx="1"/></svg></div>
           </div>
-          <div class="afk lang reveal">
+          </div>
+          <div class="slot s-lang">
+            <div class="afk lang reveal">
             <div class="art" aria-hidden="true"><div class="sun"></div><div class="seigaiha"></div></div>
             <div class="kicker">4 languages</div>
             <h3>Languages</h3>
@@ -821,6 +829,8 @@
               <div class="bar fr" style="--p:60%"><span class="nm">French</span><span class="lv">Intermediate</span><div class="meter"><div class="fill"></div></div></div>
               <div class="bar ja" style="--p:25%"><span class="nm">Japanese</span><span class="lv">Learning</span><div class="meter"><div class="fill"></div></div></div>
             </div>
+          </div>
+            <span class="dd endou right" aria-hidden="true" title="Endou"><span class="ch"><svg viewBox="0 0 64 72"><path d="M11 38Q8 18 21 12L18 3l9 6 5-8 4 8 10-5-4 9Q56 18 53 38Z" fill="#7a4a22" stroke="#4a2a10" stroke-width="1.2" stroke-linejoin="round"/><rect x="27" y="52" width="10" height="6" fill="#ffe1c4"/><path d="M10 72q2-15 22-17 20 2 22 17Z" fill="#ff8a1c" stroke="#b85a00" stroke-width="1.2"/><path d="M24 56q8 5 16 0" fill="none" stroke="#ffd400" stroke-width="3"/><ellipse cx="32" cy="40" rx="15" ry="16" fill="#ffe1c4" stroke="#2a1d14" stroke-width="1.3"/><path d="M16 33l2-7 3 5 3-6 3 5 3-6 3 6 3-6 3 6 3-5 3 6 2 2Z" fill="#7a4a22"/><path d="M16 29Q32 23 48 29v5Q32 28 16 34Z" fill="#ff7a00" stroke="#c45500" stroke-width="1"/><path d="M48 30l7-3-2 5 5 2-9 0Z" fill="#ff7a00"/><ellipse cx="26" cy="42" rx="3" ry="3.8" fill="#6b3a14"/><ellipse cx="26" cy="42.6" rx="1.6500000000000001" ry="2.28" fill="#1a1a1a"/><circle cx="26.9" cy="40.8" r="1" fill="#fff"/><ellipse cx="38" cy="42" rx="3" ry="3.8" fill="#6b3a14"/><ellipse cx="38" cy="42.6" rx="1.6500000000000001" ry="2.28" fill="#1a1a1a"/><circle cx="38.9" cy="40.8" r="1" fill="#fff"/><path d="M26 48q6 7 12 0Z" fill="#fff" stroke="#7a2a1a" stroke-width="1.3" stroke-linejoin="round"/></svg></span><span class="it inazuma"><svg viewBox="0 0 56 56"><circle cx="22" cy="33" r="17" fill="#f7f7f9" stroke="#dfe6ff" stroke-width="1.5"/><path d="M22 26.5 28.2 31 25.8 38.3 18.2 38.3 15.8 31Z" fill="#0b1226"/><path d="M22 26.5V17M28.2 31l8.8-3M25.8 38.3l5.6 7.6M18.2 38.3l-5.6 7.6M15.8 31l-8.8-3" stroke="#0b1226" stroke-width="1.6"/><path class="bolt" d="M43 2 32 22h8l-6 17 18-23h-9l6-14Z" fill="#ffd400" stroke="#fff3a0" stroke-width="1.2" stroke-linejoin="round"/></svg></span></span>
           </div>
         </div>
       </div>
