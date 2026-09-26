@@ -310,11 +310,12 @@
     .mj .stripe { width: 44px; height: 4px; background: #c8102e; margin-top: 14px; position: relative; z-index: 2; border-radius: 2px; box-shadow: 0 0 14px rgba(200,16,46,.7); }
     .mj .mjfig { position: absolute; right: 26px; bottom: 58px; height: 170px; aspect-ratio: 196 / 199; z-index: 1; }
     .mj .mjfig img { position: absolute; inset: 0; width: 100%; height: 100%; filter: invert(1) grayscale(1) contrast(8); mix-blend-mode: screen; }
-    /* hat cut along the brim line (measured from the image: y~65 at left, ~70 at right) */
-    .mj .mjhat { clip-path: polygon(0 0, 100% 0, 100% 35.5%, 76% 35.5%, 2% 33%, 0 33%); transform-origin: 62% 34%;
-      transition: transform .55s cubic-bezier(.34,1.56,.64,1); }
-    .mj .mjbody { clip-path: polygon(0 33%, 2% 33%, 76% 35.5%, 100% 35.5%, 100% 100%, 0 100%); }
-    .mj:hover .mjhat, .mj.tip .mjhat { transform: translate(-8px, -26px) rotate(-16deg); }
+    /* a fedora follows the mouse around the stage */
+    .cursorhat { position: absolute; left: 0; top: 0; width: 92px; z-index: 3; pointer-events: none; opacity: 0; transition: opacity .25s; will-change: transform; }
+    .cursorhat img { display: block; width: 100%; height: auto; filter: invert(1) grayscale(1) contrast(8); mix-blend-mode: screen;
+      clip-path: polygon(0 0, 100% 0, 100% 98.6%, 75.5% 98.6%, 2% 91.5%, 0 91.5%); }
+    .mj.hatting { cursor: none; }
+    .mj.hatting .cursorhat { opacity: 1; }
     .mj .spark { position: absolute; color: #fff; font-size: 12px; animation: twinkle 2.4s ease-in-out infinite; z-index: 1; }
     .mj .spark:nth-of-type(1) { right: 210px; top: 34px; }
     .mj .spark:nth-of-type(2) { right: 22px; top: 40px; font-size: 9px; animation-delay: -.8s; }
@@ -327,7 +328,7 @@
       mask-image: linear-gradient(180deg, transparent 0%, #000 45%);
     }
     .tiles i { background: #151515; border-radius: 3px; border: 1px solid #222; animation: tile 3.5s infinite; pointer-events: auto; transition: background .7s, box-shadow .7s; }
-    .mj:hover .tiles i, .mj.tip .tiles i { animation: none; }
+    .mj:hover .tiles i { animation: none; }
     .tiles i.lit { background: #fff4d6; box-shadow: 0 0 26px 6px rgba(255,238,190,.8); transition: background .05s, box-shadow .05s; }
     @keyframes tile { 0%, 100% { background: #151515; box-shadow: none; } 6%, 14% { background: #fff4d6; box-shadow: 0 0 26px 6px rgba(255,238,190,.75); } 26% { background: #151515; box-shadow: none; } }
     .tiles i:nth-child(1) { animation-delay: 2.0s; } .tiles i:nth-child(2) { animation-delay: 0.9s; } .tiles i:nth-child(3) { animation-delay: 2.5s; } .tiles i:nth-child(4) { animation-delay: 0.3s; } .tiles i:nth-child(5) { animation-delay: 0.4s; } .tiles i:nth-child(6) { animation-delay: 0.6s; } .tiles i:nth-child(7) { animation-delay: 2.3s; } .tiles i:nth-child(8) { animation-delay: 0.3s; } .tiles i:nth-child(9) { animation-delay: 3.2s; } .tiles i:nth-child(10) { animation-delay: 1.3s; } .tiles i:nth-child(11) { animation-delay: 0.2s; } .tiles i:nth-child(12) { animation-delay: 0.5s; } .tiles i:nth-child(13) { animation-delay: 2.7s; } .tiles i:nth-child(14) { animation-delay: 2.6s; } .tiles i:nth-child(15) { animation-delay: 0.4s; } .tiles i:nth-child(16) { animation-delay: 1.5s; } .tiles i:nth-child(17) { animation-delay: 0.5s; } .tiles i:nth-child(18) { animation-delay: 2.7s; } .tiles i:nth-child(19) { animation-delay: 0.3s; } .tiles i:nth-child(20) { animation-delay: 0.7s; } .tiles i:nth-child(21) { animation-delay: 1.4s; } .tiles i:nth-child(22) { animation-delay: 0.3s; } .tiles i:nth-child(23) { animation-delay: 2.5s; } .tiles i:nth-child(24) { animation-delay: 0.3s; } .tiles i:nth-child(25) { animation-delay: 1.4s; } .tiles i:nth-child(26) { animation-delay: 0.2s; } .tiles i:nth-child(27) { animation-delay: 0.8s; } .tiles i:nth-child(28) { animation-delay: 1.8s; } .tiles i:nth-child(29) { animation-delay: 2.6s; } .tiles i:nth-child(30) { animation-delay: 0.9s; } .tiles i:nth-child(31) { animation-delay: 0.7s; } .tiles i:nth-child(32) { animation-delay: 1.9s; }
@@ -762,10 +763,11 @@
         <div class="life">
           <div class="afk mj reveal" data-sound="snd-dance" tabindex="0" role="button" aria-label="Dance, play sound">
             <div class="art" aria-hidden="true">
-              <div class="mjfig"><img class="mjbody" src="images/mj.png" alt=""><img class="mjhat" src="images/mj.png" alt=""></div>
+              <div class="mjfig"><img src="images/mj.png" alt=""></div>
               <span class="spark">✦</span><span class="spark">✦</span><span class="spark">✦</span>
               <div class="tiles"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
             </div>
+            <div class="cursorhat" aria-hidden="true"><img src="images/hat.png" alt=""></div>
             <span class="snd" aria-hidden="true"><span class="eq"><b></b><b></b><b></b></span><span class="snd-label">Hover to play</span></span>
             <div class="kicker">Moonwalk certified</div>
             <h3>Dance</h3>
@@ -964,7 +966,26 @@
         clearTimeout(t._off);
         t._off = setTimeout(() => t.classList.remove('lit'), 420);
       }));
-      if (!matchMedia('(hover: hover)').matches) card.addEventListener('click', () => card.classList.toggle('tip'));
+      const hat = card.querySelector('.cursorhat');
+      const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let x = 0, y = 0, tx = 0, ty = 0, raf = 0;
+      const tick = () => {
+        const k = still ? 1 : 0.22;
+        const dx = (tx - x) * k; x += dx; y += (ty - y) * k;
+        const tilt = still ? 0 : Math.max(-22, Math.min(22, dx * 1.6));
+        hat.style.transform = `translate(${x - 46}px, ${y - 30}px) rotate(${tilt}deg)`;
+        raf = (Math.abs(tx - x) > 0.3 || Math.abs(ty - y) > 0.3) ? requestAnimationFrame(tick) : 0;
+      };
+      const at = e => { const r = card.getBoundingClientRect(); tx = e.clientX - r.left; ty = e.clientY - r.top; };
+      card.addEventListener('pointerenter', e => {
+        if (e.pointerType !== 'mouse') return;
+        at(e); x = tx; y = ty; card.classList.add('hatting'); tick();
+      });
+      card.addEventListener('pointermove', e => {
+        if (e.pointerType !== 'mouse') return;
+        at(e); if (!raf) raf = requestAnimationFrame(tick);
+      });
+      card.addEventListener('pointerleave', () => card.classList.remove('hatting'));
     })();
 
     // hover (or tap) the guitar / piano card to play your own recording
