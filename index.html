@@ -256,6 +256,17 @@
     .tl.current .xp .role { color: var(--red-soft); }
     .xp p { color: #c5cde6; max-width: 680px; margin: 0; }
 
+    /* company logos as faint background watermarks; brighten on hover */
+    .xp > :not(.xpbg) { position: relative; z-index: 1; }
+    .xpbg { position: absolute; z-index: 0; pointer-events: none; user-select: none;
+      filter: brightness(0) invert(1); opacity: .05; transition: opacity .4s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
+    .xpbg.cb { right: -36px; top: 50%; height: 118%; transform: translateY(-50%) rotate(-8deg); }
+    .xpbg.et { right: -10px; bottom: -4px; width: 330px; transform: rotate(-6deg); }
+    .card.xp:hover .xpbg { opacity: .13; }
+    .card.xp:hover .xpbg.cb { transform: translateY(-50%) rotate(-4deg) scale(1.04); }
+    .card.xp:hover .xpbg.et { transform: rotate(-3deg) scale(1.04); }
+    @media (max-width: 700px) { .xpbg.cb { height: 110%; right: -40px; } .xpbg.et { width: 240px; right: -30px; } }
+
     /* projects */
     .projects { display: grid; grid-template-columns: 1fr; gap: 16px; }
     .project { display: flex; flex-direction: column; }
@@ -691,6 +702,7 @@
         <div class="timeline">
           <div class="tl current reveal">
             <div class="card xp hover">
+              <img class="xpbg cb" src="images/cloudbrink.svg" alt="" aria-hidden="true">
               <div class="when">Jul 2026 — Present<br><span class="pill now"><span class="dot"></span>Current</span></div>
               <div>
                 <h3>Cloudbrink <span class="sep">|</span> Veraify</h3>
@@ -702,6 +714,7 @@
           </div>
           <div class="tl reveal">
             <div class="card xp hover">
+              <img class="xpbg et" src="images/etmoney.svg" alt="" aria-hidden="true">
               <div class="when">Jan 2026 — Jun 2026<br><span class="pill done">Internship · completed</span></div>
               <div>
                 <h3>ET Money</h3>
