@@ -308,21 +308,29 @@
     .mj .kicker { color: #e8e8e8; opacity: .75; }
     .mj h3 { letter-spacing: .02em; text-transform: uppercase; }
     .mj .stripe { width: 44px; height: 4px; background: #c8102e; margin-top: 14px; position: relative; z-index: 2; border-radius: 2px; box-shadow: 0 0 14px rgba(200,16,46,.7); }
-    .mj .mjfig { position: absolute; right: 26px; bottom: 58px; height: 170px; width: auto; z-index: 1; filter: invert(1) grayscale(1) contrast(8); mix-blend-mode: screen; }
+    .mj .mjfig { position: absolute; right: 26px; bottom: 58px; height: 170px; aspect-ratio: 196 / 199; z-index: 1; }
+    .mj .mjfig img { position: absolute; inset: 0; width: 100%; height: 100%; filter: invert(1) grayscale(1) contrast(8); mix-blend-mode: screen; }
+    /* hat cut along the brim line (measured from the image: y~65 at left, ~70 at right) */
+    .mj .mjhat { clip-path: polygon(0 0, 100% 0, 100% 35.5%, 76% 35.5%, 2% 33%, 0 33%); transform-origin: 62% 34%;
+      transition: transform .55s cubic-bezier(.34,1.56,.64,1); }
+    .mj .mjbody { clip-path: polygon(0 33%, 2% 33%, 76% 35.5%, 100% 35.5%, 100% 100%, 0 100%); }
+    .mj:hover .mjhat, .mj.tip .mjhat { transform: translate(-8px, -26px) rotate(-16deg); }
     .mj .spark { position: absolute; color: #fff; font-size: 12px; animation: twinkle 2.4s ease-in-out infinite; z-index: 1; }
     .mj .spark:nth-of-type(1) { right: 210px; top: 34px; }
     .mj .spark:nth-of-type(2) { right: 22px; top: 40px; font-size: 9px; animation-delay: -.8s; }
     .mj .spark:nth-of-type(3) { right: 240px; top: 110px; font-size: 8px; animation-delay: -1.6s; }
     @keyframes twinkle { 0%, 100% { opacity: .15; transform: scale(.7); } 50% { opacity: 1; transform: scale(1.15); } }
     .tiles {
-      position: absolute; left: -8%; right: -8%; bottom: -6px; height: 150px;
-      display: grid; grid-template-columns: repeat(7, 1fr); grid-template-rows: repeat(3, 1fr); gap: 6px;
+      position: absolute; left: -8%; right: -8%; bottom: -6px; height: 170px;
+      display: grid; grid-template-columns: repeat(8, 1fr); grid-template-rows: repeat(4, 1fr); gap: 6px;
       transform: perspective(360px) rotateX(52deg); transform-origin: 50% 100%;
       mask-image: linear-gradient(180deg, transparent 0%, #000 45%);
     }
-    .tiles i { background: #151515; border-radius: 3px; border: 1px solid #222; animation: tile 3.5s infinite; }
+    .tiles i { background: #151515; border-radius: 3px; border: 1px solid #222; animation: tile 3.5s infinite; pointer-events: auto; transition: background .7s, box-shadow .7s; }
+    .mj:hover .tiles i, .mj.tip .tiles i { animation: none; }
+    .tiles i.lit { background: #fff4d6; box-shadow: 0 0 26px 6px rgba(255,238,190,.8); transition: background .05s, box-shadow .05s; }
     @keyframes tile { 0%, 100% { background: #151515; box-shadow: none; } 6%, 14% { background: #fff4d6; box-shadow: 0 0 26px 6px rgba(255,238,190,.75); } 26% { background: #151515; box-shadow: none; } }
-    .tiles i:nth-child(1) { animation-delay: 0s; } .tiles i:nth-child(2) { animation-delay: 1.1s; } .tiles i:nth-child(3) { animation-delay: 2.3s; } .tiles i:nth-child(4) { animation-delay: 0.4s; } .tiles i:nth-child(5) { animation-delay: 1.6s; } .tiles i:nth-child(6) { animation-delay: 2.8s; } .tiles i:nth-child(7) { animation-delay: 0.8s; } .tiles i:nth-child(8) { animation-delay: 2.0s; } .tiles i:nth-child(9) { animation-delay: 0.2s; } .tiles i:nth-child(10) { animation-delay: 1.4s; } .tiles i:nth-child(11) { animation-delay: 2.6s; } .tiles i:nth-child(12) { animation-delay: 0.6s; } .tiles i:nth-child(13) { animation-delay: 1.8s; } .tiles i:nth-child(14) { animation-delay: 3.0s; } .tiles i:nth-child(15) { animation-delay: 1.0s; } .tiles i:nth-child(16) { animation-delay: 2.2s; } .tiles i:nth-child(17) { animation-delay: 0.3s; } .tiles i:nth-child(18) { animation-delay: 1.5s; } .tiles i:nth-child(19) { animation-delay: 2.7s; } .tiles i:nth-child(20) { animation-delay: 0.7s; } .tiles i:nth-child(21) { animation-delay: 1.9s; }
+    .tiles i:nth-child(1) { animation-delay: 2.0s; } .tiles i:nth-child(2) { animation-delay: 0.9s; } .tiles i:nth-child(3) { animation-delay: 2.5s; } .tiles i:nth-child(4) { animation-delay: 0.3s; } .tiles i:nth-child(5) { animation-delay: 0.4s; } .tiles i:nth-child(6) { animation-delay: 0.6s; } .tiles i:nth-child(7) { animation-delay: 2.3s; } .tiles i:nth-child(8) { animation-delay: 0.3s; } .tiles i:nth-child(9) { animation-delay: 3.2s; } .tiles i:nth-child(10) { animation-delay: 1.3s; } .tiles i:nth-child(11) { animation-delay: 0.2s; } .tiles i:nth-child(12) { animation-delay: 0.5s; } .tiles i:nth-child(13) { animation-delay: 2.7s; } .tiles i:nth-child(14) { animation-delay: 2.6s; } .tiles i:nth-child(15) { animation-delay: 0.4s; } .tiles i:nth-child(16) { animation-delay: 1.5s; } .tiles i:nth-child(17) { animation-delay: 0.5s; } .tiles i:nth-child(18) { animation-delay: 2.7s; } .tiles i:nth-child(19) { animation-delay: 0.3s; } .tiles i:nth-child(20) { animation-delay: 0.7s; } .tiles i:nth-child(21) { animation-delay: 1.4s; } .tiles i:nth-child(22) { animation-delay: 0.3s; } .tiles i:nth-child(23) { animation-delay: 2.5s; } .tiles i:nth-child(24) { animation-delay: 0.3s; } .tiles i:nth-child(25) { animation-delay: 1.4s; } .tiles i:nth-child(26) { animation-delay: 0.2s; } .tiles i:nth-child(27) { animation-delay: 0.8s; } .tiles i:nth-child(28) { animation-delay: 1.8s; } .tiles i:nth-child(29) { animation-delay: 2.6s; } .tiles i:nth-child(30) { animation-delay: 0.9s; } .tiles i:nth-child(31) { animation-delay: 0.7s; } .tiles i:nth-child(32) { animation-delay: 1.9s; }
 
     /* Football: blaugrana stripes, gold, senyera trim */
     .afk.barca {
@@ -381,13 +389,17 @@
     .casio .btns i:nth-child(3) { background: #ffd000; } .casio .btns i:nth-child(4) { background: #2d7cff; }
     .casio .grill { flex: 1; height: 16px; border-radius: 3px; background: radial-gradient(circle, #3a3a3e 1px, transparent 1.5px) 0 0/5px 5px; }
     .casio .keys { position: relative; z-index: 2; margin-top: auto; background: #0a0a0b; border-radius: 8px; padding: 6px; box-shadow: inset 0 2px 0 #ff3b30, 0 10px 24px rgba(0,0,0,.5); }
-    .casio svg { display: block; width: 100%; height: 64px; }
+    .casio svg { display: block; width: 100%; height: auto; max-height: 96px; }
     .casio .w { fill: #f7f6f0; transition: fill .12s; }
     .casio .b { fill: #141414; transition: fill .12s; }
     .casio.playing .w.hit { animation: keyhit 1.2s ease-in-out infinite; }
     .casio.playing .w.hit:nth-of-type(3) { animation-delay: .3s; }
     .casio.playing .w.hit:nth-of-type(5) { animation-delay: .6s; }
     .casio.playing .w.hit:nth-of-type(8) { animation-delay: .9s; }
+    .casio .knobs { display: flex; gap: 8px; }
+    .casio .knobs i { width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #4a4a52, #1b1b1f 70%); box-shadow: 0 2px 4px rgba(0,0,0,.6), inset 0 0 0 1px #2e2e34; position: relative; }
+    .casio .knobs i::after { content: ""; position: absolute; left: 50%; top: 2px; width: 2px; height: 6px; margin-left: -1px; background: #ffb000; border-radius: 1px; transform-origin: 50% 7px; }
+    .casio .knobs i:nth-child(2)::after { transform: rotate(40deg); } .casio .knobs i:nth-child(3)::after { transform: rotate(-50deg); }
     @keyframes keyhit { 0%, 30%, 100% { fill: #f7f6f0; } 10% { fill: #ffb000; } }
 
     /* project backgrounds */
@@ -568,7 +580,7 @@
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .reveal { opacity: 1; translate: none; transition: none; }
-      .dot, .orb, .ring::before, .float, .track, .tiles i, .mj .spark, .barca .ball, .strat.playing .strings i, .casio.playing .w.hit, .mj.playing .mjfig, .lang .word .caret, .nn .e, .nn .n, .playing .snd .eq b, .barca:hover .beam, .barca.lights .beam, .flaps .f.flip { animation: none; }
+      .dot, .orb, .ring::before, .float, .track, .tiles i, .mj .spark, .barca .ball, .strat.playing .strings i, .casio.playing .w.hit, .mj.playing .mjfig, .lang .word .caret, .nn .e, .nn .n, .playing .snd .eq b, .tiles i.lit, .barca:hover .beam, .barca.lights .beam, .flaps .f.flip { animation: none; }
       .card, .btn { transition: none; }
     }
   </style>
@@ -718,9 +730,9 @@
         <div class="life">
           <div class="afk mj reveal" data-sound="snd-dance" tabindex="0" role="button" aria-label="Dance, play sound">
             <div class="art" aria-hidden="true">
-              <img class="mjfig" src="images/mj.png" alt="">
+              <div class="mjfig"><img class="mjbody" src="images/mj.png" alt=""><img class="mjhat" src="images/mj.png" alt=""></div>
               <span class="spark">✦</span><span class="spark">✦</span><span class="spark">✦</span>
-              <div class="tiles"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="tiles"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
             </div>
             <span class="snd" aria-hidden="true"><span class="eq"><b></b><b></b><b></b></span><span class="snd-label">Hover to play</span></span>
             <div class="kicker">Moonwalk certified</div>
@@ -761,8 +773,8 @@
             <span class="snd" aria-hidden="true"><span class="eq"><b></b><b></b><b></b></span><span class="snd-label">Hover to play</span></span>
             <div class="kicker">Synthesizer</div>
             <h3>Piano</h3>
-            <div class="panel" aria-hidden="true"><span class="btns"><i></i><i></i><i></i><i></i></span><span class="grill"></span></div>
-            <div class="keys" aria-hidden="true"><svg viewBox="0 0 140 40" preserveAspectRatio="none"><rect class="w hit" x="0" y="0" width="9.4" height="40" rx="1.2"/><rect class="w" x="10" y="0" width="9.4" height="40" rx="1.2"/><rect class="w hit" x="20" y="0" width="9.4" height="40" rx="1.2"/><rect class="w" x="30" y="0" width="9.4" height="40" rx="1.2"/><rect class="w hit" x="40" y="0" width="9.4" height="40" rx="1.2"/><rect class="w" x="50" y="0" width="9.4" height="40" rx="1.2"/><rect class="w" x="60" y="0" width="9.4" height="40" rx="1.2"/><rect class="w hit" x="70" y="0" width="9.4" height="40" rx="1.2"/><rect class="w" x="80" y="0" width="9.4" height="40" rx="1.2"/><rect class="w" x="90" y="0" width="9.4" height="40" rx="1.2"/><rect class="w" x="100" y="0" width="9.4" height="40" rx="1.2"/><rect class="w" x="110" y="0" width="9.4" height="40" rx="1.2"/><rect class="w" x="120" y="0" width="9.4" height="40" rx="1.2"/><rect class="w" x="130" y="0" width="9.4" height="40" rx="1.2"/><rect class="b" x="7" y="0" width="5.6" height="24" rx="1"/><rect class="b" x="17" y="0" width="5.6" height="24" rx="1"/><rect class="b" x="37" y="0" width="5.6" height="24" rx="1"/><rect class="b" x="47" y="0" width="5.6" height="24" rx="1"/><rect class="b" x="57" y="0" width="5.6" height="24" rx="1"/><rect class="b" x="77" y="0" width="5.6" height="24" rx="1"/><rect class="b" x="87" y="0" width="5.6" height="24" rx="1"/><rect class="b" x="107" y="0" width="5.6" height="24" rx="1"/><rect class="b" x="117" y="0" width="5.6" height="24" rx="1"/><rect class="b" x="127" y="0" width="5.6" height="24" rx="1"/></svg></div>
+            <div class="panel" aria-hidden="true"><span class="knobs"><i></i><i></i><i></i></span><span class="btns"><i></i><i></i><i></i><i></i></span><span class="grill"></span></div>
+            <div class="keys" aria-hidden="true"><svg viewBox="0 0 220 60" preserveAspectRatio="xMidYMid meet"><rect class="w hit" x="0" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="10" y="0" width="9.4" height="60" rx="1.2"/><rect class="w hit" x="20" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="30" y="0" width="9.4" height="60" rx="1.2"/><rect class="w hit" x="40" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="50" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="60" y="0" width="9.4" height="60" rx="1.2"/><rect class="w hit" x="70" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="80" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="90" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="100" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="110" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="120" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="130" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="140" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="150" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="160" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="170" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="180" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="190" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="200" y="0" width="9.4" height="60" rx="1.2"/><rect class="w" x="210" y="0" width="9.4" height="60" rx="1.2"/><rect class="b" x="6.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="16.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="36.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="46.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="56.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="76.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="86.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="106.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="116.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="126.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="146.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="156.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="176.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="186.6" y="0" width="6" height="36" rx="1"/><rect class="b" x="196.6" y="0" width="6" height="36" rx="1"/></svg></div>
           </div>
           <div class="afk lang reveal">
             <div class="art" aria-hidden="true"><div class="sun"></div><div class="seigaiha"></div></div>
@@ -909,6 +921,18 @@
       card.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') start(); });
       card.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') stop(); });
       if (!matchMedia('(hover: hover)').matches) card.addEventListener('click', () => { card.classList.add('lights'); next(); });
+    })();
+
+    // Dance card: Billie Jean floor lights up under the cursor; hat tips on hover (tap on touch)
+    (() => {
+      const card = document.querySelector('.afk.mj');
+      if (!card) return;
+      card.querySelectorAll('.tiles i').forEach(t => t.addEventListener('pointerenter', () => {
+        t.classList.add('lit');
+        clearTimeout(t._off);
+        t._off = setTimeout(() => t.classList.remove('lit'), 420);
+      }));
+      if (!matchMedia('(hover: hover)').matches) card.addEventListener('click', () => card.classList.toggle('tip'));
     })();
 
     // hover (or tap) the guitar / piano card to play your own recording
